@@ -1,0 +1,48 @@
+Squares of Sorted Array
+->Time Complexity: O(n)
+->Space Complexity: O(n)
+
+def sortedSquares(self, nums: List[int]) -> List[int]:
+        ls=[]
+        for i in nums:
+            ls.append(i**2)
+        ls.sort()
+        return ls
+
+Find the Pivot Index
+->Time Complexity:O(n)
+->Space Complexity:O(1)
+
+def pivotIndex(self, nums: List[int]) -> int:
+        for i in range(len(nums)):
+            if(sum(nums[:i])==sum(nums[i+1:])):
+                return i
+        return -1
+
+Majority Element
+->Time Complexity: O(n)
+->Space Complexity: O(1)
+
+def majorityElement(self, nums: List[int]) -> int:
+        count = 0
+        majority = 0
+        for num in nums:
+            if count == 0:
+                majority = num
+                count += 1
+            elif num == majority:
+                count += 1
+            else:
+                count -= 1
+        return majority
+
+Best Time to sell and buy stocks(part 2)
+
+def maxProfit(self, prices: List[int]) -> int:
+        prev,profit=prices[0],0
+        
+        for val in prices[1:]:
+            if val>prev:
+                profit+=val-prev
+            prev=val
+        return profit
