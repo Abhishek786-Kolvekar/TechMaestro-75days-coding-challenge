@@ -1,0 +1,84 @@
+1.Insert Delete Get Random
+
+class RandomizedSet:
+
+    def __init__(self):
+        self.data = {}
+
+    def insert(self, val: int) -> bool:
+        if val not in self.data:
+            self.data[val] = 1
+            return True
+        return False
+        
+    def remove(self, val: int) -> bool:
+        if val in self.data:
+            self.data.pop(val)
+            return True     
+        return False
+
+    def getRandom(self) -> int:
+        return random.choice(list(self.data.keys()))
+
+2. Subarray sum equals to k
+
+class Solution:
+	def subarraySum(self, nums: List[int], k: int) -> int:
+
+		ans=0
+		prefsum=0
+		d={0:1}
+
+		for num in nums:
+			prefsum +=num
+
+			if prefsum-k in d:
+				ans +=d[prefsum-k]
+
+			if prefsum not in d:
+				d[prefsum] = 1
+			else:
+				d[prefsum] +=1
+
+		return ans
+
+3. Next Permutation
+
+class Solution:
+    def nextPermutation(self, nums: List[int]) -> None:
+        i = len(nums)-2
+        while i >= 0 and nums[i+1] <= nums[i]:
+            i -= 1
+        if i >= 0:
+            j = len(nums)-1
+            while j >= 0 and nums[j] <= nums[i]:
+                j -= 1
+            nums[i], nums[j] = nums[j], nums[i]
+        i += 1
+        j = len(nums)-1
+        while i < j:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+            j -= 1
+
+4.Maximum Area
+
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        i = maxarea = h = 0
+        j = len(height)-1
+        while i < j:
+            h1 = height[i] 
+            h2 = height[j]
+            b1 = (j-i)
+                
+            if h1 > h2:
+                area = h2 * b1
+                j-=1
+            else:
+                area = h1 * b1
+                i+=1
+                
+            maxarea = max(maxarea, area)
+        
+        return maxarea
