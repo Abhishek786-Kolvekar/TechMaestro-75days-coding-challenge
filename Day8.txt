@@ -1,0 +1,77 @@
+1.Maximum area of cake
+
+class Solution:
+    def maxArea(self, h: int, w: int, horizontalCuts: List[int], verticalCuts: List[int]) -> int:
+        horizontalCuts.append(0)
+        horizontalCuts.append(h)
+        verticalCuts.append(0)
+        verticalCuts.append(w)
+        horizontalCuts = sorted(horizontalCuts)
+        verticalCuts = sorted(verticalCuts)
+        
+        diffH = [x - y for x, y in zip(horizontalCuts[1:], horizontalCuts[:-1])]
+        diffV = [x - y for x, y in zip(verticalCuts[1:], verticalCuts[:-1])]
+        
+        return (max(diffH) * max(diffV)) % (10 ** 9 + 7)
+
+2.Max Area of island
+
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        visited = set()
+        max_area = 0
+        
+        def dfs(i, j):
+            if (i, j) in visited:
+                return 0
+            if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == 0:
+                return 0
+            visited.add((i, j))
+            return 1 + dfs(i, j+1) + dfs(i, j-1) + dfs(i+1, j) + dfs(i-1, j)
+        
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if (i, j) not in visited and grid[i][j] == 1:
+                    area = dfs(i, j)
+                    max_area = max(max_area, area)
+        
+        return max_area
+
+3.All duplicates of array
+
+class Solution:
+    def findDuplicates(self, nums: List[int]) -> List[int]:
+        dic = {}
+        lst = []
+        for i in nums:
+            if i not in dic:
+                dic[i] = 1
+            else:
+                lst.append(i)
+        return lst
+
+4. K diff pairs
+
+
+class Solution:
+    def findPairs(self, nums: List[int], k: int) -> int:
+        
+        hashNums={}
+        pairs=set()
+        
+        for n in nums: 
+            hashNums[n]=hashNums.get(n,0)+1
+            
+            if n-k in hashNums:
+                pairs.add(tuple(set([n,n-k])))
+            
+            if n+k in hashNums:
+                pairs.add(tuple(set([n,n+k])))
+        
+        if k==0: 
+            ct=0
+            for n,f in hashNums.items():
+                ct+=(f>=2)
+            return ct
+        
+        return len(pairs)
