@@ -1,0 +1,46 @@
+1.Best Time to buy and sell stocks
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        buy1 , buy2 = float('inf') ,float('inf')
+        profit1, profit2 = 0 ,0
+        for price in prices:
+            buy1 = min(buy1,price)
+            profit1 = max(profit1,price-buy1)
+            buy2 = min(buy2,price-profit1)
+            profit2 = max(profit2,price-buy2)
+        return profit2
+
+2.First Missing number
+
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        
+        hash_tab = {}
+        min_num = 1
+        for i in nums:
+            if i not in hash_tab:
+                hash_tab[i] = 1
+        while True:
+            if min_num in hash_tab:
+                min_num += 1
+            else:
+                return min_num
+
+3.Largest rectangle in histogram
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        heights.append(0)
+        res = 0
+        stack = []
+        for i, height in enumerate(heights):
+            new_i = i
+            while stack and heights[stack[-1]] > height:
+                top = stack.pop()
+                res = max(res, (i - top) * heights[top])
+                new_i = top
+            heights[new_i] = height
+            stack.append(new_i)
+        
+        return res 
